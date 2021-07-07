@@ -5,6 +5,15 @@
     <div class="col-md-6 offset-md-3">
         <form method="POST" action="{{ route('register') }}">
             @csrf
+
+            @if(count($errors->all()))
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
+
             <div class="mb-3">
                 <label for="exampleInputName1" class="form-label">Name</label>
                 <input name="name" type="text" class="form-control" id="exampleInputName1" required value="{{ old('name') }}">

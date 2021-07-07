@@ -19,15 +19,15 @@ class RegisterController extends Controller
     {
         $input = $request->input();
 
-        $messages = [
-            'email.unique' => 'Custom validation message.',
-        ];
+//        $messages = [
+//            'email.unique' => 'Custom validation message.',
+//        ];
 
         $validator = Validator::make($input, [
             'name' => 'required|max:255',
             'email' => 'required|unique:users,email',
             'password' => 'required|confirmed|min:6',
-        ], $messages);
+        ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all(':message');
@@ -36,9 +36,12 @@ class RegisterController extends Controller
                 ->withErrors($errors);
         }
 
+        $input['password'] = bcrypt($input['password']);
 
-        User::create($input);
+        $user = User::create($input);
 
-        return view('welcome');
+        auth()->login($user);
+
+        return view('auth.login');
     }
 }
