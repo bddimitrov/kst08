@@ -10,7 +10,10 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        $posts = Post::where('user_id', $user->id)->get();
+        // Select * users WHERE user_id = 5;
+        $posts = Post::where('user_id', $user->id)
+            ->orderBy('updated_at', 'DESC')
+            ->get();
 
         return view('dashboard.index', compact('posts'));
     }

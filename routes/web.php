@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Post\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,11 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard');
+
+//Posts
+Route::get('/post', [PostController::class, 'view'])->name('post.form');
+Route::post('/post/create', [PostController::class, 'create'])->name('post');
+
+Route::get('/post/{id}', [PostController::class, 'edit'])->name('post.edit.form');
+Route::put('/post/update', [PostController::class, 'update'])->name('post.update.form');
+Route::delete('/post', [PostController::class, 'delete'])->name('post.delete.form');
